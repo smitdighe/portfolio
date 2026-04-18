@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Smit's Portfolio - Full Stack Developer specializing in Python, JavaScript, and modern web development.">
+    <title>Smit Dighe | Developer Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Portfolio</div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button id="theme-btn" class="theme-btn">🌙</button>
+                <button class="hamburger" id="hamburger-btn" aria-label="Toggle menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Hi, I'm <span class="highlight">Smit</span></h1>
+            <p class="hero-tagline"><span id="typed-text"></span><span class="cursor">|</span></p>
+            <p class="hero-description">Building elegant solutions through code. Passionate about web development and creating meaningful digital experiences.</p>
+            <a href="#contact" class="btn btn-primary">Get In Touch</a>
+        </div>
+        <div class="hero-animation">
+            <div class="floating-box"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>I'm a passionate developer with a strong foundation in computer science and web development. I love creating responsive, user-friendly applications and exploring new technologies.</p>
+                    <p>With experience in full-stack development, I focus on writing clean, maintainable code and delivering projects that make a real impact. I'm constantly learning and improving my skills to stay current with industry trends.</p>
+                    <p>When I'm not coding, you can find me exploring new frameworks, contributing to open-source projects, or solving coding challenges.</p>
+                </div>
+                <div class="about-stats">
+                    <div class="stat">
+                        <h3>5+</h3>
+                        <p>Mini Projects Completed</p>
+                    </div>
+                    <div class="stat">
+                        <h3>100%</h3>
+                        <p>Dedication</p>
+                    </div>
+                    <div class="stat">
+                        <h3>∞</h3>
+                        <p>Learning Journey</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 class="section-title">Skills</h2>
+            <div class="skills-grid">
+                <!-- Python Skill -->
+                <div class="skill-card">
+                    <div class="skill-icon">🐍</div>
+                    <h3>Python</h3>
+                    <p>Data analysis, scripting, automation, and backend development with Django/Flask</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 85%"></div>
+                    </div>
+                </div>
+
+                <!-- HTML Skill -->
+                <div class="skill-card">
+                    <div class="skill-icon">📄</div>
+                    <h3>HTML</h3>
+                    <p>Semantic markup, accessibility, and responsive web structure</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 90%"></div>
+                    </div>
+                </div>
+
+                <!-- CSS Skill -->
+                <div class="skill-card">
+                    <div class="skill-icon">🎨</div>
+                    <h3>CSS</h3>
+                    <p>Responsive design, animations, Flexbox, Grid, and modern styling techniques</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 88%"></div>
+                    </div>
+                </div>
+
+                <!-- JavaScript Skill -->
+                <div class="skill-card">
+                    <div class="skill-icon">⚡</div>
+                    <h3>JavaScript</h3>
+                    <p>DOM manipulation, ES6+, async programming, and interactive web applications</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 82%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+                <!-- Project 1: Student Marks Analysis -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Student Marks Analysis</h3>
+                    </div>
+                    <p class="project-description">
+                        Takes student names and marks as input.
+                        Stores data using Pandas & DataFrame.
+                        Calculates : Average marks, Highest marks & Lowest marks. 
+                        Visualizes data using a bar chart.
+                    </p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">NumPy</span>
+                        <span class="tech-tag">Pandas</span>
+                        <span class="tech-tag">Matplotlib</span>
+                        <span class="tech-tag">Seaborn</span>
+                    </div>
+                    <a href="https://github.com/smitdighe/student-marks-analysis" class="github-btn" target="_blank">
+                        <span>→</span> View GitHub
+                    </a>
+                </div>
+
+                <!-- Project 2: Number Guessing Game -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Number Guessing Game</h3>
+                    </div>
+                    <p class="project-description">
+                        A simple number guessing game implemented in Python with user input validation and score tracking.
+                    </p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Python</span>
+                    </div>
+                    <a href="https://github.com/smitdighe/number-guessing-python" class="github-btn" target="_blank">
+                        <span>→</span> View GitHub
+                    </a>
+                </div>
+
+                <!-- Project 3: Password Generator -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Password Generator</h3>
+                    </div>
+                    <p class="project-description">
+                        Interactive web-based password generator with customizable options. Features include length selection, character type toggles, and one-click copying to clipboard.
+                    </p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Python</span>
+                    </div>
+                    <a href="https://github.com/smitdighe/password-generator-python" class="github-btn" target="_blank">
+                        <span>→</span> View GitHub
+                    </a>
+                </div>
+
+                <!-- Project 4: To-Do List -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>To-Do List</h3>
+                    </div>
+                    <p class="project-description">
+                        Feature-rich task management application with local storage persistence. Includes task creation, deletion, completion tracking, and category filtering for better organization.
+                    </p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Python</span>
+                    </div>
+                    <a href="https://github.com/smitdighe/todo-list-python" class="github-btn" target="_blank">
+                        <span>→</span> View GitHub
+                    </a>
+                </div>
+
+                <!-- Project 5: Dice Rolling Simulator -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Dice Rolling Simulator</h3>
+                    </div>
+                    <p class="project-description">
+                        A simple dice rolling simulator implemented in Python with customizable dice types and roll counts.
+                    </p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Python</span>
+                    </div>
+                    <a href="https://github.com/smitdighe/dice-rolling-python" class="github-btn" target="_blank">
+                        <span>→</span> View GitHub
+                    </a>
+                </div>
+
+                <!-- Project 6: Portfolio Website -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Portfolio Website</h3>
+                    </div>
+                    <p class="project-description">
+                        Modern, responsive portfolio website showcasing projects and skills. Includes dark mode toggle, smooth scrolling, animations, and mobile-optimized design.
+                    </p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                    <a href="https://github.com/smitdighe/portfolio-website" class="github-btn" target="_blank">
+                        <span>→</span> View GitHub
+                    </a>
+                </div>
+
+                <!-- Project 7: Bonus Project Slot -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Coming Soon</h3>
+                    </div>
+                    <p class="project-description">
+                        Working on exciting new projects. Stay tuned for updates on upcoming developments and innovations in web development and data analysis.
+                    </p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Innovation</span>
+                        <span class="tech-tag">Learning</span>
+                    </div>
+                    <a href="#contact" class="github-btn">
+                        <span>→</span> Get Notified
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Let's Connect</h2>
+            <div class="contact-content">
+                <p class="contact-text">
+                    I'm always open to new opportunities and collaborations. Feel free to reach out if you'd like to discuss projects, opportunities, or just want to say hello!
+                </p>
+                <div class="contact-methods">
+                    <a href="mailto:smitdighe@gmail.com" class="contact-link">
+                        <span class="contact-icon">✉️</span>
+                        <span>Email</span>
+                    </a>
+                    <a href="https://linkedin.com/in/smitdighe" class="contact-link" target="_blank">
+                        <span class="contact-icon">💼</span>
+                        <span>LinkedIn</span>
+                    </a>
+                    <a href="https://github.com/smitdighe" class="contact-link" target="_blank">
+                        <span class="contact-icon">🐙</span>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="#" class="contact-link" target="_blank">
+                        <span class="contact-icon">📸</span>
+                        <span>Instagram</span>
+                    </a>
+                </div>
+                <form class="contact-form" id="contact-form">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea placeholder="Your Message" rows="5" required></textarea>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Smit's Portfolio. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scroll-top-btn" aria-label="Scroll to top">↑</button>
+
+    <!-- JavaScript File -->
+    <script src="script.js"></script>
+</body>
+</html>
