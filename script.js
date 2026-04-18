@@ -213,10 +213,7 @@ function setupTypingAnimation() {
 
     const phrases = [
         "Coding Enthusiast",
-        "Aspiring Full Stack Developer",
-        "Lifelong Learner",
-        "Python Developer",
-        "Web Developer"
+        "Aspiring Full Stack Developer"
     ];
 
     let phraseIndex = 0;
