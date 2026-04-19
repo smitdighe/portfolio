@@ -78,9 +78,9 @@ open index.html
 
 ## 📬 Contact
 
-* Email: [smitdighe@gmail.com](mailto:smitdighe@gmail.com)
-* LinkedIn: [Smit Dighe](https://linkedin.com/in/smitdighe)
-* GitHub:[@smitdighe](https://github.com/smitdighe)
+* Email : [smitdighe@gmail.com](mailto:smitdighe@gmail.com)
+* LinkedIn : [Smit Dighe](https://linkedin.com/in/smitdighe)
+* GitHub :[@smitdighe](https://github.com/smitdighe)
 
 ---
 
