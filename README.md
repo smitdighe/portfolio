@@ -17,11 +17,19 @@ A modern, responsive portfolio website showcasing my projects, skills, and exper
 
 ## 🛠️ Tech Stack
 
-<img src="https://skillicons.dev/icons?i=html,css,js" />
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=html" />
+  &nbsp;&nbsp;&nbsp;
+  <img src="https://skillicons.dev/icons?i=css" />
+  &nbsp;&nbsp;&nbsp;
+  <img src="https://skillicons.dev/icons?i=js" />
+</p>
 
-- HTML5  
-- CSS3 (Flexbox, Grid, Animations)  
-- JavaScript (Vanilla JS)
+<ul>
+  <li>HTML5</li>
+  <li>CSS3 (Flexbox, Grid, Animations)</li>
+  <li>JavaScript (Vanilla JS)</li>
+</ul>
 
 ---
 
