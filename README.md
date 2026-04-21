@@ -82,9 +82,14 @@ open index.html
 
 ## 📬 Contact
 
-* Email : [smitdighe@gmail.com](mailto:smitdighe@gmail.com)
-* LinkedIn : [Smit Dighe](https://linkedin.com/in/smitdighe)
-* GitHub :[@smitdighe](https://github.com/smitdighe)
+  <a href="https://linkedin.com/in/smitdighe" style="text-decoration: none;">
+    <img src="https://skillicons.dev/icons?i=linkedin" height="45"/>
+  </a>
+  &nbsp;&nbsp;&nbsp;
+
+  <a href="mailto:smitdighe@gmail.com" style="text-decoration: none;">
+    <img src="https://skillicons.dev/icons?i=gmail" height="45"/>
+  </a>
 
 ---
 
