@@ -16,10 +16,15 @@ A modern, responsive portfolio website showcasing my projects, skills, and exper
 ---
 
 ## 🛠️ Tech Stack
+<img src="https://skillicons.dev/icons?i=html" />&nbsp;&nbsp;
+<img src="https://skillicons.dev/icons?i=css" />&nbsp;&nbsp;
+<img src="https://skillicons.dev/icons?i=js" />
 
-* HTML5
-* CSS3 (Flexbox, Grid, Animations)
-* JavaScript (Vanilla JS)
+<ul>
+  <li>HTML5</li>
+  <li>CSS3 (Flexbox, Grid, Animations)</li>
+  <li>JavaScript (Vanilla JS)</li>
+</ul>
 
 ---
 
@@ -78,9 +83,14 @@ open index.html
 
 ## 📬 Contact
 
-* Email : [smitdighe@gmail.com](mailto:smitdighe@gmail.com)
-* LinkedIn : [Smit Dighe](https://linkedin.com/in/smitdighe)
-* GitHub :[@smitdighe](https://github.com/smitdighe)
+  <a href="https://linkedin.com/in/smitdighe" style="text-decoration: none;">
+    <img src="https://skillicons.dev/icons?i=linkedin" height="45"/>
+  </a>
+  &nbsp;&nbsp;&nbsp;
+
+  <a href="mailto:smitdighe@gmail.com" style="text-decoration: none;">
+    <img src="https://skillicons.dev/icons?i=gmail" height="45"/>
+  </a>
 
 ---
 
