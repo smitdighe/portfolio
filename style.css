@@ -1003,3 +1003,21 @@ body {
     transform: translateY(-4px);
     box-shadow: 0 8px 30px var(--glow-color);
 }
+
+.project-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.project-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at var(--x) var(--y), rgba(255,255,255,0.2), transparent 40%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.project-card:hover::after {
+    opacity: 1;
+}

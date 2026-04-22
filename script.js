@@ -181,24 +181,20 @@ function setupSkillBars() {
 }
 
 // ============================================
-// PROJECT CARD TILT EFFECT
+// PROJECT CARD SPOTLIGHT EFFECT
 // ============================================
 
-function setupTiltEffect() {
-    const projectCards = document.querySelectorAll('.project-card');
+function setupSpotlightEffect() {
+    const cards = document.querySelectorAll('.project-card');
 
-    projectCards.forEach(card => {
+    cards.forEach(card => {
         card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            const tiltX = -(y - rect.height / 2) / 25;
-            const tiltY = (x - rect.width / 2) / 25;
-            card.style.transform = `translateY(-12px) scale(1.02) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
-        });
 
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = '';
+            card.style.setProperty('--x', `${x}px`);
+            card.style.setProperty('--y', `${y}px`);
         });
     });
 }
