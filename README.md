@@ -100,9 +100,3 @@ open index.html
 * Add project filtering
 * Add animations using GSAP
 * Deploy on Vercel / Netlify
-
----
-
-## ⭐ Show your support
-
-If you like this project, give it a ⭐ on GitHub!
