@@ -51,11 +51,12 @@ A modern, responsive portfolio website showcasing my projects, skills, and exper
 
 ## 🔥 Projects Showcased
 
+* Notes App
 * Student Marks Analysis
 * Number Guessing Game
 * Password Generator
 * To-Do List
-* Dice Rolling Simulator
+And many more...
 
 ---
 
