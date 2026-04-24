@@ -1,6 +1,15 @@
 # 🌐 Smit Dighe - Portfolio
 
-A modern, responsive portfolio website showcasing my projects, skills, and experience as a developer.
+🚀 **Live Website:**  
+👉 https://smit-dighe-portfolio.netlify.app/
+
+---
+
+## 🧠 About
+
+A modern, responsive developer portfolio showcasing my projects, skills, and experience.
+
+---
 
 ## ✨ Features
 
@@ -101,4 +110,3 @@ open index.html
 * Add backend for contact form
 * Add project filtering
 * Add animations using GSAP
-* Deploy on Vercel / Netlify
