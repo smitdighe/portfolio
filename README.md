@@ -49,13 +49,15 @@ A modern, responsive portfolio website showcasing my projects, skills, and exper
 
 ---
 
-## 🔥 Projects Showcased
+## 🔥 Projects
 
+* Notes App
 * Student Marks Analysis
 * Number Guessing Game
 * Password Generator
 * To-Do List
-* Dice Rolling Simulator
+
+🚀...and more in my repositories.
 
 ---
 
@@ -100,9 +102,3 @@ open index.html
 * Add project filtering
 * Add animations using GSAP
 * Deploy on Vercel / Netlify
-
----
-
-## ⭐ Show your support
-
-If you like this project, give it a ⭐ on GitHub!
