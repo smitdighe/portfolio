@@ -72,9 +72,22 @@ A modern, responsive developer portfolio showcasing my projects, skills, and exp
 
 ## ⚙️ Run Locally
 
+1. Clone the repository
+
 ```bash
 git clone https://github.com/smitdighe/portfolio.git
+```
+
+2. Navigate into the folder
+
+```bash
 cd portfolio
+```
+
+3. Run in browser
+
+```bash
+open index.html
 ```
 
 ---
