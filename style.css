@@ -1016,8 +1016,14 @@ body {
     background: radial-gradient(circle at var(--x) var(--y), rgba(255,255,255,0.2), transparent 40%);
     opacity: 0;
     transition: opacity 0.3s;
+    pointer-events: none;
 }
 
 .project-card:hover::after {
     opacity: 1;
+}
+
+.github-btn {
+    position: relative;
+    z-index: 2;
 }
