@@ -1,6 +1,15 @@
 # 🌐 Smit Dighe - Portfolio
 
-A modern, responsive portfolio website showcasing my projects, skills, and experience as a developer.
+🚀 **Live Website:**  
+👉 https://smit-dighe-portfolio.netlify.app/
+
+---
+
+## 🧠 About
+
+A modern, responsive developer portfolio showcasing my projects, skills, and experience.
+
+---
 
 ## ✨ Features
 
@@ -61,7 +70,7 @@ A modern, responsive portfolio website showcasing my projects, skills, and exper
 
 ---
 
-## ⚙️ Setup Instructions
+## ⚙️ Run Locally
 
 1. Clone the repository
 
@@ -69,13 +78,13 @@ A modern, responsive portfolio website showcasing my projects, skills, and exper
 git clone https://github.com/smitdighe/portfolio.git
 ```
 
-1. Open the folder
+2. Navigate into the folder
 
 ```bash
 cd portfolio
 ```
 
-1. Run in browser
+3. Run in browser
 
 ```bash
 open index.html
@@ -101,4 +110,3 @@ open index.html
 * Add backend for contact form
 * Add project filtering
 * Add animations using GSAP
-* Deploy on Vercel / Netlify
