@@ -55,8 +55,8 @@ A modern, responsive portfolio website showcasing my projects, skills, and exper
 * Student Marks Analysis
 * Number Guessing Game
 * Password Generator
-* To-Do List
-And many more...
+* To-Do List &nbsp;
+  and many more...
 
 ---
 
