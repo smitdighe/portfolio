@@ -1,7 +1,7 @@
 # 🌐 Smit Dighe - Portfolio
 
 🚀 **Live Website:**  
-👉 [smit-dighe-portfolio.vercel.app](https://smit-dighe-portfolio.vercel.app)
+👉 [Smit Dighe Portfolio](https://smit-dighe-portfolio.vercel.app)
 
 ---
 
