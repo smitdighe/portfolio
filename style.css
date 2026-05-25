@@ -1,9 +1,3 @@
-/* ============================================
-   PORTFOLIO WEBSITE - CSS
-   Modern, responsive design with dark mode
-   ============================================ */
-
-/* Root variables for theming */
 :root {
     --primary-color: #6366f1;
     --secondary-color: #1e293b;
@@ -1026,4 +1020,10 @@ body {
 .github-btn {
     position: relative;
     z-index: 2;
+}
+
+.skill-icon-img {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
 }
