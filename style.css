@@ -572,7 +572,7 @@ body {
 .tech-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.4rem;
     margin-bottom: 1.5rem;
 }
 
@@ -583,6 +583,10 @@ body {
     border-radius: 20px;
     font-size: 0.8rem;
     font-weight: 600;
+}
+
+#bin .tech-tags {
+    gap: 0.3rem;
 }
 
 .github-btn {
