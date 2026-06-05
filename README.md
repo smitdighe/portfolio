@@ -107,6 +107,5 @@ open index.html
 
 ## 🧠 Future Improvements
 
-* Add backend for contact form
 * Add project filtering
 * Add animations using GSAP
