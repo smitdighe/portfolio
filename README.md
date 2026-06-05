@@ -58,13 +58,14 @@ A modern, responsive developer portfolio showcasing my projects, skills, and exp
 
 ---
 
-## 🔥 Projects
+## 🗂️ Projects
 
-* Notes App
-* Student Marks Analysis
-* Number Guessing Game
-* Password Generator
-* To-Do List
+| Project | Description | Status |
+|:--------|:------------|:------:|
+| [⚙️ Revvy](https://revvy-iota.vercel.app/) | AI-powered code review assistant — bugs, security, performance | `LIVE` |
+| [🛡️ SpamShield](https://spamshield-36t0.onrender.com/) | Real-time SMS spam detector built with TF-IDF & Logistic Regression | `LIVE` |
+| [🗑️ BinRoute](https://bin-route.vercel.app/) | Smart waste management dashboard for municipal fleet managers | `LIVE` |
+| [📝 Notes App](https://notes-app-d9cm.onrender.com) | Simple note-taking app built with Python and Flask | `LIVE` |
 
 🚀...and more in my repositories.
 
@@ -107,6 +108,5 @@ open index.html
 
 ## 🧠 Future Improvements
 
-* Add backend for contact form
 * Add project filtering
 * Add animations using GSAP
