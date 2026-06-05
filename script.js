@@ -1,12 +1,3 @@
-/* ============================================
-   PORTFOLIO WEBSITE - JAVASCRIPT
-   Handles interactivity and dynamic features
-   ============================================ */
-
-// ============================================
-// UTILITY FUNCTIONS (defined first so they're available)
-// ============================================
-
 /**
  * Throttle function to optimize scroll event listeners
  */
@@ -252,19 +243,34 @@ function setupTypingAnimation() {
 const contactForm = document.getElementById('contact-form');
 
 if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const name = contactForm.querySelector('input[placeholder="Your Name"]').value;
-        const email = contactForm.querySelector('input[placeholder="Your Email"]').value;
-        const message = contactForm.querySelector('textarea[placeholder="Your Message"]').value;
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
 
-        if (name.trim() && email.trim() && message.trim()) {
-            showNotification('Thank you for your message! I\'ll get back to you soon.', 'success');
-            contactForm.reset();
-            console.log('Form submitted:', { name, email, message });
-        } else {
-            showNotification('Please fill in all fields.', 'error');
+        const formData = new FormData(contactForm);
+
+        try {
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                showNotification('Message sent! I\'ll get back to you soon.', 'success');
+                contactForm.reset();
+            } else {
+                showNotification('Something went wrong. Please try again.', 'error');
+            }
+        } catch (error) {
+            showNotification('Network error. Please try again.', 'error');
+        } finally {
+            submitBtn.textContent = 'Send Message';
+            submitBtn.disabled = false;
         }
     });
 }
