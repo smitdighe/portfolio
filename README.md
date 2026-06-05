@@ -66,7 +66,6 @@ A modern, responsive developer portfolio showcasing my projects, skills, and exp
 | [🛡️ SpamShield](https://spamshield-36t0.onrender.com/) | Real-time SMS spam detector built with TF-IDF & Logistic Regression | `LIVE` |
 | [🗑️ BinRoute](https://bin-route.vercel.app/) | Smart waste management dashboard for municipal fleet managers | `LIVE` |
 | [📝 Notes App](https://notes-app-d9cm.onrender.com) | Simple note-taking app built with Python and Flask | `LIVE` |
-| [💾 Student Record Management System](https://github.com/smitdighe/student-record-management-system) | Menu-driven CLI app in C to manage student records using file handling | `CLI` |
 
 🚀...and more in my repositories.
 
