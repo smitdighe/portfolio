@@ -131,12 +131,11 @@ export default function About() {
             <div className="flex flex-1 flex-col justify-center">
               <h3 className="text-2xl font-bold text-white">Ledger</h3>
               <p className="mt-4 max-w-xl text-lg leading-relaxed text-gray-300">
-                An LLM observability platform that ingests live agent traces,
-                runs continuous eval on production traffic, and auto-triages
-                failures with a LangGraph diagnostic swarm across a 4-tier model
-                router.
+                LLM observability platform that runs continuous eval on live
+                agent traffic and auto-triages failures with a LangGraph
+                diagnostic swarm.
               </p>
-              <div className="mt-4 flex flex-wrap gap-2">
+              <div className="mt-8 flex flex-wrap gap-2">
                 {['LangGraph', 'ClickHouse', 'RAGAS', 'FastAPI'].map((t) => (
                   <span
                     key={t}
