@@ -79,7 +79,7 @@ function BentoTile({
 /*  About section                                                      */
 /* ------------------------------------------------------------------ */
 
-const FOCUS_TAGS = ['LangChain', 'LangGraph', 'Multi-Agent Systems']
+const FOCUS_TAGS = ['LLMOps', 'LangGraph', 'Multi-Agent Systems']
 
 export default function About() {
   return (
@@ -129,14 +129,15 @@ export default function About() {
             className="md:col-span-2"
           >
             <div className="flex flex-1 flex-col justify-center">
-              <h3 className="text-2xl font-bold text-white">FinDocAgent</h3>
+              <h3 className="text-2xl font-bold text-white">Ledger</h3>
               <p className="mt-4 max-w-xl text-lg leading-relaxed text-gray-300">
-                A multi-agent RAG system over SEC filings — LangGraph
-                orchestration, ColPali visual retrieval, pgvector search, served
-                through FastAPI.
+                An LLM observability platform that ingests live agent traces,
+                runs continuous eval on production traffic, and auto-triages
+                failures with a LangGraph diagnostic swarm across a 4-tier model
+                router.
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
-                {['LangGraph', 'ColPali', 'pgvector', 'FastAPI'].map((t) => (
+                {['LangGraph', 'ClickHouse', 'RAGAS', 'FastAPI'].map((t) => (
                   <span
                     key={t}
                     className="rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-sm text-gray-400"
