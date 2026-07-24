@@ -3,21 +3,22 @@ import {
   siPython,
   siScikitlearn,
   siFastapi,
-  siFlask,
   siReact,
   siTypescript,
   siTailwindcss,
   siSupabase,
+  siLanggraph,
+  siPostgresql,
 } from 'simple-icons'
 import type { SimpleIcon } from 'simple-icons'
 import ScrollStack, { ScrollStackItem } from '../ui/ScrollStack'
 
 import verityImg from '../../assets/Verity.png'
-import letterForgeImg from '../../assets/LetterForge.png'
 import revvyImg from '../../assets/Revvy.png'
 import gitlyticsImg from '../../assets/Gitlytics.png'
-import spamShieldImg from '../../assets/SpamShield.png'
 import binRouteImg from '../../assets/BinRoute.png'
+import findocagentImg from '../../assets/FinDocAgent.png'
+import fathomImg from '../../assets/Fathom.png'
 
 interface Tech {
   icon: SimpleIcon
@@ -35,6 +36,35 @@ interface Project {
 
 const projects: Project[] = [
   {
+    title: 'FinDocAgent',
+    description:
+      'FinDocAgent answers questions about dense SEC filings by dispatching a team of specialized agents that retrieve, reason, and cross-check. Retrieval-augmented generation grounds every answer in the source document, with citations you can trace back to the exact filing. It turns hundreds of pages of 10-Ks into a conversation.',
+      image: findocagentImg,
+    demoUrl: 'https://fin-doc-agent.vercel.app/',
+    githubUrl: 'https://github.com/smitdighe/FinDocAgent',
+    tech: [
+      { icon: siPython, name: 'Python' },
+      { icon: siFastapi, name: 'FastAPI' },
+      { icon: siLanggraph, name: 'LangGraph' },
+      { icon: siPostgresql, name: 'Postgres' },
+      { icon: siSupabase, name: 'Supabase' },
+    ],
+  },
+  {
+    title: 'Fathom',
+    description:
+      'Fathom researches any topic on its own — searching, reading, and reflecting in a loop until it has enough to write. It synthesizes findings into a structured, fully cited report instead of a wall of links. An autonomous analyst that hands you the conclusion, not the homework.',
+    image: fathomImg,
+    demoUrl: 'https://fathom-dev.vercel.app/',
+    githubUrl: 'https://github.com/smitdighe/Fathom',
+    tech: [
+      { icon: siPython, name: 'Python' },
+      { icon: siFastapi, name: 'FastAPI' },
+      { icon: siLanggraph, name: 'LangGraph' },
+      { icon: siReact, name: 'React' },
+    ],
+  },
+  {
     title: 'Verity',
     description:
       'Verity flags fraudulent job postings before they ever reach an applicant. A LogisticRegression model scores each listing, while SHAP surfaces exactly which words and signals drove the verdict. Recruiters get a transparent, explainable decision instead of a black-box number.',
@@ -46,20 +76,6 @@ const projects: Project[] = [
       { icon: siScikitlearn, name: 'scikit-learn' },
       { icon: siFastapi, name: 'FastAPI' },
       { icon: siReact, name: 'React' },
-    ],
-  },
-  {
-    title: 'Letter Forge',
-    description:
-      'Letter Forge turns a résumé and a job description into a tailored cover letter in seconds. Responses stream token-by-token over SSE, so the draft materializes live as it is written. The export-ready output lets you tweak and send without ever leaving the page.',
-    image: letterForgeImg,
-    demoUrl: 'https://letter-forge.vercel.app/',
-    githubUrl: 'https://github.com/smitdighe/letter-forge',
-    tech: [
-      { icon: siReact, name: 'React' },
-      { icon: siTypescript, name: 'TypeScript' },
-      { icon: siFastapi, name: 'FastAPI' },
-      { icon: siPython, name: 'Python' },
     ],
   },
   {
@@ -86,19 +102,6 @@ const projects: Project[] = [
       { icon: siReact, name: 'React' },
       { icon: siTypescript, name: 'TypeScript' },
       { icon: siTailwindcss, name: 'Tailwind' },
-    ],
-  },
-  {
-    title: 'SpamShield',
-    description:
-      'SpamShield classifies SMS messages as spam or ham in real time. A TF-IDF vectorizer feeds a Logistic Regression classifier trained on thousands of labeled texts. Lightweight enough to respond instantly, accurate enough to trust.',
-    image: spamShieldImg,
-    demoUrl: 'https://spamshield-36t0.onrender.com/',
-    githubUrl: 'https://github.com/smitdighe/spamshield',
-    tech: [
-      { icon: siPython, name: 'Python' },
-      { icon: siScikitlearn, name: 'scikit-learn' },
-      { icon: siFlask, name: 'Flask' },
     ],
   },
   {
