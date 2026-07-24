@@ -228,6 +228,19 @@ export default function Projects() {
             ))}
           </ScrollStack>
         </div>
+
+        <div className="mt-8 flex justify-center">
+          <a
+            href="https://github.com/smitdighe?tab=repositories"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cursor-target inline-flex items-center gap-2 rounded-lg border border-white/15 px-5 py-3 text-sm font-medium text-gray-200 transition-colors hover:border-white/30 hover:bg-white/5 hover:text-white"
+          >
+            <Github className="h-4 w-4" />
+            Explore more on GitHub
+            <ArrowUpRight className="h-4 w-4" />
+          </a>
+        </div>
       </div>
     </section>
   )
