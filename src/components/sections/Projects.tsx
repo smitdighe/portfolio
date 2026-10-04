@@ -9,6 +9,8 @@ import {
   siSupabase,
   siLanggraph,
   siPostgresql,
+  siNextdotjs,
+  siPrisma,
 } from 'simple-icons'
 import type { SimpleIcon } from 'simple-icons'
 import ScrollStack, { ScrollStackItem } from '../ui/ScrollStack'
@@ -19,6 +21,7 @@ import gitlyticsImg from '../../assets/Gitlytics.png'
 import binRouteImg from '../../assets/BinRoute.png'
 import findocagentImg from '../../assets/FinDocAgent.png'
 import fathomImg from '../../assets/Fathom.png'
+import undertowImg from '../../assets/Undertow.png'
 
 interface Tech {
   icon: SimpleIcon
@@ -62,6 +65,20 @@ const projects: Project[] = [
       { icon: siFastapi, name: 'FastAPI' },
       { icon: siLanggraph, name: 'LangGraph' },
       { icon: siReact, name: 'React' },
+    ],
+  },
+  {
+    title: 'Undertow',
+    description:
+      'Undertow pulls the real signal out of a flood of alerts before it wakes anyone up. Each incident is deduplicated against open ones with local embeddings, classified by an LLM with a provider fallback chain, and streamed live to an on-call dashboard. A human approves, edits, or rejects every call, and each correction becomes ground truth for a nightly eval that gates CI.',
+    image: undertowImg,
+    demoUrl: 'https://undertow-dev.vercel.app/',
+    githubUrl: 'https://github.com/smitdighe/Undertow',
+    tech: [
+      { icon: siNextdotjs, name: 'Next.js' },
+      { icon: siTypescript, name: 'TypeScript' },
+      { icon: siPrisma, name: 'Prisma' },
+      { icon: siPostgresql, name: 'Postgres' },
     ],
   },
   {
