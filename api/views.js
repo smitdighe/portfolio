@@ -2,20 +2,21 @@
 //
 // GitHub's image proxy fails to fetch komarev.com on some page loads, which
 // shows a broken badge on the profile. Fetching it from here, with retries,
-// keeps the original komarev counter (each request still counts one view)
-// while GitHub only talks to Vercel. No env vars needed.
+// keeps the original komarev counter while GitHub only talks to Vercel.
+// komarev counts a view only when the User-Agent starts with "github-camo",
+// so GitHub's User-Agent is passed through unchanged. No env vars needed.
 
 const BADGE_URL =
   'https://komarev.com/ghpvc/?username=smitdighe&label=PROFILE+VIEWS&color=FF7B54&style=for-the-badge'
 const ATTEMPTS = 3
 const TIMEOUT_MS = 3000
 
-async function fetchBadge() {
+async function fetchBadge(userAgent) {
   let lastError = null
   for (let attempt = 0; attempt < ATTEMPTS; attempt++) {
     try {
       const upstream = await fetch(BADGE_URL, {
-        headers: { 'User-Agent': 'portfolio-views-badge' },
+        headers: { 'User-Agent': userAgent },
         signal: AbortSignal.timeout(TIMEOUT_MS),
       })
       const type = upstream.headers.get('content-type') || ''
@@ -32,7 +33,9 @@ async function fetchBadge() {
 
 export default async function handler(req, res) {
   try {
-    const svg = await fetchBadge()
+    const svg = await fetchBadge(
+      req.headers['user-agent'] || 'portfolio-views-badge',
+    )
     // Never cache: every request is one profile view.
     res.setHeader('Content-Type', 'image/svg+xml; charset=utf-8')
     res.setHeader(
