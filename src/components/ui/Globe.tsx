@@ -512,10 +512,10 @@ export default function Globe() {
           ref={(el) => {
             badgeRefs.current[i] = el
           }}
-          style={{ ['--brand' as string]: `#${tech.icon.hex}` }}
+          style={{ ['--brand' as string]: readableBrand(tech.icon.hex) }}
           className="group absolute left-0 top-0 will-change-transform"
         >
-          <div className="flex h-[90px] w-[90px] items-center justify-center rounded-full border border-white/10 bg-black/60 backdrop-blur-sm">
+          <div className="flex h-[90px] w-[90px] items-center justify-center rounded-full border border-white/10 bg-black/60 backdrop-blur-sm transition-[scale,border-color,box-shadow] duration-300 ease-out group-hover:scale-[1.22] group-hover:border-[color:var(--brand)] group-hover:shadow-[0_0_28px_-6px_var(--brand)]">
             <svg
               viewBox="0 0 24 24"
               className="h-[45px] w-[45px] fill-gray-500 transition-colors duration-200 group-hover:[fill:var(--brand)]"
