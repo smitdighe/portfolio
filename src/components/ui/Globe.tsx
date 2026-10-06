@@ -206,18 +206,32 @@ const SIN_TILT = Math.sin(AXIAL_TILT)
 const ROTATION_LERP = 0.18
 const ALPHA_BUCKETS = 6 // depth-shaded wireframe strokes per frame
 
+// Badge circle diameter scales with the globe so the icons keep the same
+// proportion on a phone as on a laptop: ~14% of the globe box, 44px..72px.
+const BADGE_RATIO = 0.14
+const BADGE_MIN_PX = 44
+const BADGE_MAX_PX = 72
+
 // --- Intro: on first view the icons fly in from around the section and land
 // on their spots on the globe (they track the live, spinning position). ---
-const INTRO_FLIGHT_MS = 1700 // flight time of one icon
-const INTRO_STAGGER_MS = 700 // icons launch at random moments inside this window
-const INTRO_SCALE: [number, number] = [1.3, 1.8] // start bigger = nearer the viewer
-const INTRO_MAX_BADGE = 0.34 // ...but a flying badge never exceeds 34% of the globe box
-const BADGE_PX = 90 // badge circle size (h-[90px] w-[90px] below)
+const INTRO_FLIGHT_MS = 1500 // flight time of one icon
+const INTRO_STAGGER_MS = 900 // launches sweep once around the globe inside this window
+const INTRO_SCALE: [number, number] = [1.6, 2.2] // start bigger = nearer the viewer
+const INTRO_MAX_BADGE = 0.3 // ...but a flying badge never exceeds 30% of the globe box
 const INTRO_DIST_X: [number, number] = [0.95, 1.45] // launch distance from centre, x globe width
 const INTRO_DIST_Y: [number, number] = [0.55, 0.85] // same, vertically
+const INTRO_SWIRL = 0.32 // sideways bow of each flight path, x its length
+const INTRO_TURN: [number, number] = [140, 220] // degrees an icon rolls on its way in
 const ICON_REST_RGB: [number, number, number] = [106, 114, 130] // ~ Tailwind gray-500
 
 const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3)
+const easeOutQuart = (t: number) => 1 - Math.pow(1 - t, 4)
+// Slight overshoot: a shrinking badge dips just under its resting size and
+// settles back, so each icon lands softly instead of stopping dead.
+const easeOutBack = (t: number) => {
+  const c1 = 1.2
+  return 1 + (c1 + 1) * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2)
+}
 const between = ([lo, hi]: [number, number]) => lo + Math.random() * (hi - lo)
 
 // Official brand colour, except near-black ones (Express, GitHub) which would
@@ -268,19 +282,24 @@ export default function Globe() {
     const continents = buildContinents()
     const homes = fibonacciSphere(TECHS.length)
 
-    // Launch point (angle around the globe, distance, size), delay and colour
-    // for every icon. Angles are spread evenly, then shuffled, so icons arrive
-    // from all sides.
+    // Launch point (angle around the globe, distance, size), delay, roll and
+    // colour for every icon. Angles are spread evenly, then shuffled across
+    // icons, so they arrive from all sides; launches follow the angle, sweeping
+    // once around the globe, so the arrivals read as one swirl.
     const order = homes.map((_, i) => i).sort(() => Math.random() - 0.5)
     const flights = homes.map((_, i) => ({
-      angle: (order[i] / homes.length) * Math.PI * 2 + (Math.random() - 0.5) * 0.6,
+      angle: (order[i] / homes.length) * Math.PI * 2 + (Math.random() - 0.5) * 0.4,
       distX: between(INTRO_DIST_X),
       distY: between(INTRO_DIST_Y),
       scale: between(INTRO_SCALE),
-      delay: Math.random() * INTRO_STAGGER_MS,
+      delay: (order[i] / homes.length) * INTRO_STAGGER_MS + Math.random() * 80,
+      turn: between(INTRO_TURN),
       rgb: hexToRgb(readableBrand(TECHS[i].icon.hex)),
     }))
     const icons = badgeRefs.current.map((el) => el?.querySelector('svg') ?? null)
+    const circles = badgeRefs.current.map(
+      (el) => (el?.firstElementChild as HTMLElement | null) ?? null,
+    )
 
     // Play the intro the first time the globe is on screen, so a reload that
     // restores the scroll position plays it straight away. Reduced-motion
@@ -300,9 +319,12 @@ export default function Globe() {
     if (!introDone) io.observe(container)
 
     let size = 0
+    let badgePx = BADGE_MAX_PX
     let dpr = Math.min(window.devicePixelRatio || 1, 2)
     const resize = () => {
       size = container.clientWidth
+      badgePx = clamp(Math.round(size * BADGE_RATIO), BADGE_MIN_PX, BADGE_MAX_PX)
+      container.style.setProperty('--badge', `${badgePx}px`)
       dpr = Math.min(window.devicePixelRatio || 1, 2)
       canvas.width = size * dpr
       canvas.height = size * dpr
@@ -333,10 +355,10 @@ export default function Globe() {
 
       const cx = size / 2
       const cy = size / 2
-      // Sphere radius, but never so large that a surface badge (half ≈ 45px)
-      // would reach past the container edge — keeps every icon inside the box
-      // regardless of how narrow the section gets on small screens.
-      const R = Math.min(size * 0.42, size / 2 - 52)
+      // Sphere radius, but never so large that a surface badge (half its
+      // diameter at the front's 1.08 scale, plus a little air) would reach past
+      // the container edge — keeps every icon inside the box at any width.
+      const R = Math.min(size * 0.42, size / 2 - badgePx * 0.7)
 
       const rot = (p: Vec3) => {
         // 1. spin around the sphere's own polar (Y) axis
@@ -416,38 +438,73 @@ export default function Globe() {
         let opacity = clamp((z + 0.15) / 0.5, 0, 1)
         let zIndex = 10 + Math.round(z * 10)
         let interactive = z > 0
+        let roll = 0
 
         if (!introDone) {
           const f = flights[i]
           const icon = icons[i]
+          const circle = circles[i]
           const t =
             introStart === null
               ? 0
               : clamp((now - introStart - f.delay) / INTRO_FLIGHT_MS, 0, 1)
           if (t < 1) {
             flying = true
-            const e = easeOutCubic(t)
+            const e = easeOutQuart(t)
+            // Curved flight: a quadratic curve from the launch point to the
+            // live spot, bowed sideways the same way for every icon, so the
+            // arrivals swirl in rather than shooting in straight lines.
             const fromX = cx + Math.cos(f.angle) * f.distX * size
             const fromY = cy + Math.sin(f.angle) * f.distY * size
-            x = fromX + (sx - fromX) * e
-            y = fromY + (sy - fromY) * e
-            const startScale = Math.min(f.scale, (size * INTRO_MAX_BADGE) / BADGE_PX)
-            scale = startScale + (scale - startScale) * e
-            // fade in at launch, then settle into the resting depth fade
-            opacity = Math.min(1, t / 0.15) * (1 + (opacity - 1) * e)
-            zIndex = 30 // over the globe while flying, still under the Navbar (z-50)
+            const ctrlX = (fromX + sx) / 2 - (sy - fromY) * INTRO_SWIRL
+            const ctrlY = (fromY + sy) / 2 + (sx - fromX) * INTRO_SWIRL
+            const u = 1 - e
+            x = u * u * fromX + 2 * u * e * ctrlX + e * e * sx
+            y = u * u * fromY + 2 * u * e * ctrlY + e * e * sy
+            const startScale = Math.min(f.scale, (size * INTRO_MAX_BADGE) / badgePx)
+            scale = startScale + (scale - startScale) * easeOutBack(t)
+            roll = f.turn * (1 - easeOutCubic(t))
+            // quick fade in right at the launch point, then settle into the
+            // resting depth fade
+            opacity = Math.min(1, t / 0.06) * (1 + (opacity - 1) * e)
+            // colour and glow hold through the flight and cool off on landing
+            const cool = t * t * (3 - 2 * t)
+            // over the globe while flying (nearer icons on top), still under
+            // the Navbar (z-50)
+            zIndex = 30 + Math.round(u * 10)
             interactive = false
+            // in brand colour with a brand glow while flying, cooling to the
+            // resting grey badge as it lands
+            const [r, g, b] = f.rgb
+            const heat = 1 - cool
             if (icon) {
-              // in brand colour while flying, cooling to the resting grey on landing
-              const mix = f.rgb.map((c, j) => Math.round(c + (ICON_REST_RGB[j] - c) * e))
+              const mix = f.rgb.map((c, j) => Math.round(c + (ICON_REST_RGB[j] - c) * cool))
+              icon.style.transition = 'none'
               icon.style.fill = `rgb(${mix[0]}, ${mix[1]}, ${mix[2]})`
             }
-          } else if (icon && icon.style.fill) {
-            icon.style.fill = '' // landed: back to the stylesheet (grey, brand on hover)
+            if (circle) {
+              circle.style.transition = 'none'
+              circle.style.borderColor = `rgba(${r}, ${g}, ${b}, ${0.1 + 0.5 * heat})`
+              circle.style.boxShadow = `0 0 ${Math.round(badgePx * 0.45)}px -4px rgba(${r}, ${g}, ${b}, ${0.7 * heat})`
+            }
+          } else {
+            // landed: hand back to the stylesheet (grey, brand on hover)
+            if (icon && icon.style.fill) {
+              icon.style.fill = ''
+              icon.style.transition = ''
+            }
+            if (circle && circle.style.boxShadow) {
+              circle.style.borderColor = ''
+              circle.style.boxShadow = ''
+              circle.style.transition = ''
+            }
           }
         }
 
-        el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) scale(${scale})`
+        el.style.transform =
+          roll === 0
+            ? `translate(${x}px, ${y}px) translate(-50%, -50%) scale(${scale})`
+            : `translate(${x}px, ${y}px) translate(-50%, -50%) scale(${scale}) rotate(${roll}deg)`
         el.style.opacity = `${opacity}`
         // Keep depth ordering among badges, but stay well below the Navbar
         // (z-50) so an icon can never paint over the fixed nav.
@@ -502,7 +559,7 @@ export default function Globe() {
       onPointerMove={onPointerMove}
       onPointerUp={endDrag}
       onPointerLeave={endDrag}
-      className="relative isolate mx-auto aspect-square w-full max-w-lg cursor-grab touch-none select-none overflow-visible"
+      className="relative isolate mx-auto aspect-square w-full max-w-lg cursor-grab touch-none select-none overflow-visible [--badge:72px]"
     >
       <canvas ref={canvasRef} className="absolute inset-0" />
 
@@ -515,16 +572,16 @@ export default function Globe() {
           style={{ ['--brand' as string]: readableBrand(tech.icon.hex) }}
           className="group absolute left-0 top-0 will-change-transform"
         >
-          <div className="flex h-[90px] w-[90px] items-center justify-center rounded-full border border-white/10 bg-black/60 backdrop-blur-sm transition-[scale,border-color,box-shadow] duration-300 ease-out group-hover:scale-[1.22] group-hover:border-[color:var(--brand)] group-hover:shadow-[0_0_28px_-6px_var(--brand)]">
+          <div className="flex h-[var(--badge)] w-[var(--badge)] items-center justify-center rounded-full border border-white/10 bg-black/60 backdrop-blur-sm transition-[scale,border-color,box-shadow] duration-300 ease-out group-hover:scale-[1.22] group-hover:border-[color:var(--brand)] group-hover:shadow-[0_0_22px_-5px_var(--brand)]">
             <svg
               viewBox="0 0 24 24"
-              className="h-[45px] w-[45px] fill-gray-500 transition-colors duration-200 group-hover:[fill:var(--brand)]"
+              className="h-1/2 w-1/2 fill-gray-500 transition-colors duration-200 group-hover:[fill:var(--brand)]"
               aria-hidden="true"
             >
               <path d={tech.icon.path} />
             </svg>
           </div>
-          <span className="pointer-events-none absolute left-1/2 top-full mt-3 -translate-x-1/2 whitespace-nowrap rounded-md bg-black/60 px-2.5 py-1 text-base text-gray-300 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+          <span className="pointer-events-none absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap rounded-md bg-black/60 px-2 py-0.5 text-sm text-gray-300 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
             {tech.name}
           </span>
         </div>
