@@ -129,14 +129,14 @@ export default function About() {
             className="md:col-span-2"
           >
             <div className="flex flex-1 flex-col justify-center">
-              <h3 className="text-2xl font-bold text-white">Ledger</h3>
+              <h3 className="text-2xl font-bold text-white">Cistern</h3>
               <p className="mt-4 max-w-xl text-lg leading-relaxed text-gray-300">
-                LLM observability platform that runs continuous eval on live
-                agent traffic and auto-triages failures with a LangGraph
-                diagnostic swarm.
+                Natural-language-to-SQL service for Postgres that validates
+                every query on a parsed AST and self-corrects failures with a
+                second model.
               </p>
               <div className="mt-8 flex flex-wrap gap-2">
-                {['LangGraph', 'ClickHouse', 'RAGAS', 'FastAPI'].map((t) => (
+                {['sqlglot', 'Groq', 'Cerebras', 'FastAPI'].map((t) => (
                   <span
                     key={t}
                     className="rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-sm text-gray-400"
