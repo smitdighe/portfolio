@@ -206,6 +206,36 @@ const SIN_TILT = Math.sin(AXIAL_TILT)
 const ROTATION_LERP = 0.18
 const ALPHA_BUCKETS = 6 // depth-shaded wireframe strokes per frame
 
+// --- Intro: on first view the icons fly in from around the section and land
+// on their spots on the globe (they track the live, spinning position). ---
+const INTRO_FLIGHT_MS = 1700 // flight time of one icon
+const INTRO_STAGGER_MS = 700 // icons launch at random moments inside this window
+const INTRO_SCALE: [number, number] = [1.3, 1.8] // start bigger = nearer the viewer
+const INTRO_MAX_BADGE = 0.34 // ...but a flying badge never exceeds 34% of the globe box
+const BADGE_PX = 90 // badge circle size (h-[90px] w-[90px] below)
+const INTRO_DIST_X: [number, number] = [0.95, 1.45] // launch distance from centre, x globe width
+const INTRO_DIST_Y: [number, number] = [0.55, 0.85] // same, vertically
+const ICON_REST_RGB: [number, number, number] = [106, 114, 130] // ~ Tailwind gray-500
+
+const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3)
+const between = ([lo, hi]: [number, number]) => lo + Math.random() * (hi - lo)
+
+// Official brand colour, except near-black ones (Express, GitHub) which would
+// vanish on the dark badge: those use white, their usual dark-mode colour.
+function readableBrand(hex: string): string {
+  const n = parseInt(hex, 16)
+  const r = (n >> 16) & 255
+  const g = (n >> 8) & 255
+  const b = n & 255
+  const luma = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255
+  return luma < 0.2 ? '#ffffff' : `#${hex}`
+}
+
+function hexToRgb(hex: string): [number, number, number] {
+  const n = parseInt(hex.replace('#', ''), 16)
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255]
+}
+
 export default function Globe() {
   const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -237,6 +267,37 @@ export default function Globe() {
     const lines = buildWireframe()
     const continents = buildContinents()
     const homes = fibonacciSphere(TECHS.length)
+
+    // Launch point (angle around the globe, distance, size), delay and colour
+    // for every icon. Angles are spread evenly, then shuffled, so icons arrive
+    // from all sides.
+    const order = homes.map((_, i) => i).sort(() => Math.random() - 0.5)
+    const flights = homes.map((_, i) => ({
+      angle: (order[i] / homes.length) * Math.PI * 2 + (Math.random() - 0.5) * 0.6,
+      distX: between(INTRO_DIST_X),
+      distY: between(INTRO_DIST_Y),
+      scale: between(INTRO_SCALE),
+      delay: Math.random() * INTRO_STAGGER_MS,
+      rgb: hexToRgb(readableBrand(TECHS[i].icon.hex)),
+    }))
+    const icons = badgeRefs.current.map((el) => el?.querySelector('svg') ?? null)
+
+    // Play the intro the first time the globe is on screen, so a reload that
+    // restores the scroll position plays it straight away. Reduced-motion
+    // users skip it and get the resting globe immediately.
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    let introStart: number | null = null
+    let introDone = reduceMotion
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (introStart === null && entries.some((entry) => entry.isIntersecting)) {
+          introStart = performance.now()
+          io.disconnect()
+        }
+      },
+      { threshold: 0.3 },
+    )
+    if (!introDone) io.observe(container)
 
     let size = 0
     let dpr = Math.min(window.devicePixelRatio || 1, 2)
@@ -342,20 +403,58 @@ export default function Globe() {
       }
 
       // --- Icon badges on the surface ---
+      const now = performance.now()
+      let flying = false
       homes.forEach((home, i) => {
         const el = badgeRefs.current[i]
         if (!el) return
         const { sx, sy, z } = rot(home)
         const depth = (z + 1) / 2 // 0 back .. 1 front
-        const scale = 0.72 + depth * 0.36
-        const opacity = clamp((z + 0.15) / 0.5, 0, 1)
-        el.style.transform = `translate(${sx}px, ${sy}px) translate(-50%, -50%) scale(${scale})`
+        let x = sx
+        let y = sy
+        let scale = 0.72 + depth * 0.36
+        let opacity = clamp((z + 0.15) / 0.5, 0, 1)
+        let zIndex = 10 + Math.round(z * 10)
+        let interactive = z > 0
+
+        if (!introDone) {
+          const f = flights[i]
+          const icon = icons[i]
+          const t =
+            introStart === null
+              ? 0
+              : clamp((now - introStart - f.delay) / INTRO_FLIGHT_MS, 0, 1)
+          if (t < 1) {
+            flying = true
+            const e = easeOutCubic(t)
+            const fromX = cx + Math.cos(f.angle) * f.distX * size
+            const fromY = cy + Math.sin(f.angle) * f.distY * size
+            x = fromX + (sx - fromX) * e
+            y = fromY + (sy - fromY) * e
+            const startScale = Math.min(f.scale, (size * INTRO_MAX_BADGE) / BADGE_PX)
+            scale = startScale + (scale - startScale) * e
+            // fade in at launch, then settle into the resting depth fade
+            opacity = Math.min(1, t / 0.15) * (1 + (opacity - 1) * e)
+            zIndex = 30 // over the globe while flying, still under the Navbar (z-50)
+            interactive = false
+            if (icon) {
+              // in brand colour while flying, cooling to the resting grey on landing
+              const mix = f.rgb.map((c, j) => Math.round(c + (ICON_REST_RGB[j] - c) * e))
+              icon.style.fill = `rgb(${mix[0]}, ${mix[1]}, ${mix[2]})`
+            }
+          } else if (icon && icon.style.fill) {
+            icon.style.fill = '' // landed: back to the stylesheet (grey, brand on hover)
+          }
+        }
+
+        el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) scale(${scale})`
         el.style.opacity = `${opacity}`
         // Keep depth ordering among badges, but stay well below the Navbar
         // (z-50) so an icon can never paint over the fixed nav.
-        el.style.zIndex = `${10 + Math.round(z * 10)}`
-        el.style.pointerEvents = z > 0 ? 'auto' : 'none'
+        el.style.zIndex = `${zIndex}`
+        el.style.pointerEvents = interactive ? 'auto' : 'none'
       })
+      if (!introDone && introStart !== null && !flying) introDone = true
 
       rafId = requestAnimationFrame(frame)
     }
@@ -364,6 +463,7 @@ export default function Globe() {
     return () => {
       cancelAnimationFrame(rafId)
       ro.disconnect()
+      io.disconnect()
     }
   }, [])
 
@@ -402,7 +502,7 @@ export default function Globe() {
       onPointerMove={onPointerMove}
       onPointerUp={endDrag}
       onPointerLeave={endDrag}
-      className="relative isolate mx-auto aspect-square w-full max-w-lg cursor-grab touch-none select-none overflow-hidden"
+      className="relative isolate mx-auto aspect-square w-full max-w-lg cursor-grab touch-none select-none overflow-visible"
     >
       <canvas ref={canvasRef} className="absolute inset-0" />
 

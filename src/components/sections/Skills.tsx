@@ -5,7 +5,7 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="flex scroll-mt-24 flex-col items-center justify-center px-6 py-10"
+      className="flex scroll-mt-24 flex-col items-center justify-center overflow-x-clip px-6 py-10"
     >
       <BlurText
         text="TECH STACK"
